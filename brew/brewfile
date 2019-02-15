@@ -1,0 +1,47 @@
+tap 'caskroom/cask'
+tap 'caskroom/fonts'
+tap 'homebrew/bundle'
+
+# Core Homebrew
+brew 'freetype'
+brew 'git'
+brew 'grep'
+brew 'imagemagick'
+brew 'jpeg'
+brew 'kubernetes-cli'
+brew 'libpng'
+brew 'libtiff'
+brew 'libtool'
+brew 'mas'
+brew 'mc'
+brew 'nginx'
+brew 'node'
+brew 'oniguruma'
+brew 'openssl'
+brew 'pcre'
+brew 'postgresql'
+brew 'sqlite'
+brew 'tig'
+brew 'watch'
+brew 'wget'
+brew 'xz'
+brew 'yarn'
+brew 'zsh'
+brew 'zsh-autosuggestions'
+brew 'zsh-completions'
+brew 'zsh-syntax-highlighting'
+
+# Cask Apps
+cask_args appdir: '/Applications'
+
+cask 'docker'
+cask 'font-open-sans'
+cask 'google-chrome'
+cask 'minikube'
+cask 'obs'
+cask 'spotify'
+cask 'slack'
+cask 'vlc'
+
+# Mac App Store
+mas 'Keynote', id: 409183694
