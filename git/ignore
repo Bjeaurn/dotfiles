@@ -1,0 +1,3 @@
+# Place globally ignored file patterns here
+.DS_Store
+node_modules/
