@@ -42,6 +42,7 @@ cask 'minikube'
 cask 'obs'
 cask 'spotify'
 cask 'slack'
+cask 'visual-studio-code'
 cask 'vlc'
 
 # Mac App Store
