@@ -7,10 +7,10 @@ if test ! $(which brew); then
 fi
 
 # Update Homebrew recipes
-echo "Updating Homebrew"
+echo "Updating Homebrew..."
 brew update
 
 # Install all our dependencies with bundle (See Brewfile)
-echo "Installing Brewfile"
+echo "Installing Brewfile..."
 brew tap homebrew/bundle
-brew bundle
+brew bundle --file=./brew/brewfile
