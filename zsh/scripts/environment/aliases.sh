@@ -2,6 +2,8 @@
 # brew install ctags
 
 alias cd..='cd ..'
+alias h='cd ~/Development/'
+alias d='cd ~/Development/'
 
 alias gst='git status'
 
@@ -14,4 +16,3 @@ if [[ "$(uname -s)" == "Darwin" ]]
 then
   alias ctags="`brew --prefix`/bin/ctags"
 fi
-
