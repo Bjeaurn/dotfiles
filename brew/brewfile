@@ -35,6 +35,7 @@ brew 'zsh-syntax-highlighting'
 cask_args appdir: '/Applications'
 
 cask 'docker'
+cask 'firefox'
 cask 'font-open-sans'
 cask 'google-chrome'
 cask 'minikube'
