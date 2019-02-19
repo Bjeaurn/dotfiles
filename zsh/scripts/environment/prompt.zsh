@@ -2,24 +2,6 @@ autoload colors; colors;
 export LSCOLORS="Gxfxcxdxbxegedabagacad"
 setopt prompt_subst
 
-# Assign the current VI mode to the env variable VIMODE
-function zle-keymap-select zle-line-init zle-line-finish {
-  case $KEYMAP in
-    vicmd)
-      export VIMODE='n'
-      ;;
-    viins|main)
-      export VIMODE='i'
-      ;;
-  esac
-
-  zle reset-prompt
-  zle -R
-}
-zle -N zle-line-init
-zle -N zle-line-finish
-zle -N zle-keymap-select
-
 function prompt_working_directory() {
   echo "%~"
 }
@@ -132,6 +114,7 @@ function build_prompt() {
   local cARROW="%F{188}%k"
 
   local RED="%F{196}%k"
+  local fadedGREEN="%F{71}%K"
   local GREEN="%{$fg_bold[green]%}"
   local YELLOW="%{$fg_bold[yellow]%}"
   local CYAN="%{$fg_bold[cyan]%}"
@@ -158,7 +141,7 @@ function build_prompt() {
 
   if prompt_is_inside_git
   then
-    P+="$SEP $GREEN$(prompt_git_branch) "
+    P+="$SEP $fadedGREEN$(prompt_git_branch) "
 
     local REMOTE=$(prompt_git_remote)
     local LOCAL=$(prompt_git_local)

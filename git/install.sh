@@ -26,7 +26,7 @@ git config --global alias.sts "status -s"
 git config --global alias.prune-local "!git branch -vv | awk '/: gone]/{print \$1}' | xargs git branch -d"
 git config --global alias.uncommit "reset HEAD^"
 git config --global alias.wipe "!git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard"
-
+git config --global alias.prune-merged "!git branch --merged master | grep -v \"\* master\" | xargs -n 1 git branch -d"
 
 # for presentations: see https://coderwall.com/p/ok-iyg/git-prev-next
 git config --global alias.prev "checkout HEAD^1"

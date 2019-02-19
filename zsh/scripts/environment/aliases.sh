@@ -4,7 +4,7 @@
 alias cd..='cd ..'
 alias h='cd ~/Development/'
 alias d='cd ~/Development/'
-
+alias gbda='git prune-merged'
 alias gst='git status'
 
 # So we can type `git add *Test*` instead of `git add "*Test*"`
