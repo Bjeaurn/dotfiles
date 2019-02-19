@@ -11,6 +11,3 @@ function select_branch() {
   zle reset-prompt
 }
 
-zle -N select_branch
-bindkey "\C-g" select_branch
-
