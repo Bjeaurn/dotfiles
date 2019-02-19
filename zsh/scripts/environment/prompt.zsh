@@ -137,6 +137,7 @@ function build_prompt() {
   local CYAN="%{$fg_bold[cyan]%}"
   local MAGENTA="%{$fg_bold[magenta]%}"
   local WHITE="%{$fg_bold[white]%}"
+  local ORANGE="%F{220}%k"
 
   local RAW_SEP="❯"
   local SEP="$WHITE$RAW_SEP"
@@ -157,12 +158,12 @@ function build_prompt() {
 
   if prompt_is_inside_git
   then
-    P+="$SEP $YELLOW$(prompt_git_branch) "
+    P+="$SEP $GREEN$(prompt_git_branch) "
 
     local REMOTE=$(prompt_git_remote)
     local LOCAL=$(prompt_git_local)
-    [[ -n "$REMOTE" ]] && P+="$SEP $YELLOW$REMOTE "
-    [[ -n "$LOCAL" ]] && P+="$SEP $YELLOW$LOCAL "
+    [[ -n "$REMOTE" ]] && P+="$ORANGE$REMOTE "
+    [[ -n "$LOCAL" ]] && P+="$YELLOW$LOCAL "
 
     GIT_WARNINGS=$(prompt_git_warnings)
   fi
@@ -170,12 +171,12 @@ function build_prompt() {
   local SYMS=$(prompt_root_and_jobs)
   local RET_STATUS=$(prompt_ret_status $EXIT)
   [[ -n "$SYMS$RET_STATUS$GIT_WARNINGS" ]] && P+="$SEP "
-  [[ -n "$SYMS" ]] && P+="$YELLOW$SYMS"
+  [[ -n "$SYMS" ]] && P+="$GREEN$SYMS"
   [[ -n "$RET_STATUS" ]] && P+="$RED$RET_STATUS"
   [[ -n "$GIT_WARNINGS" ]] && P+="$RED$GIT_WARNINGS"
   [[ -n "$RET_STATUS$SYMS$GIT_WARNINGS" ]] && P+=" "
 
-  P+="$(prompt_is_git_dirty $cERROR $cSEP)$RAW_SEP"
+  P+="$(prompt_is_git_dirty $cSEP)$RAW_SEP"
 
   P+="%{$reset_color%} "
 
