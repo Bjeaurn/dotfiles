@@ -131,7 +131,7 @@ function build_prompt() {
   local cSEP="%F{245}%k"
   local cARROW="%F{188}%k"
 
-  local RED="%F{196}%k}"
+  local RED="%F{196}%k"
   local GREEN="%{$fg_bold[green]%}"
   local YELLOW="%{$fg_bold[yellow]%}"
   local CYAN="%{$fg_bold[cyan]%}"
@@ -151,21 +151,21 @@ function build_prompt() {
   P+="$SEP $cDIR$WORKING_DIR"
   [[ -n "$INJECTION" ]] && P+=" $SEP $cDIR$INJECTION"
 
-  if prompt_is_inside_git
-  then
-    P+=" $SEP $YELLOW$(prompt_git_branch)"
-
-    local REMOTE=$(prompt_git_remote)
-    local LOCAL=$(prompt_git_local)
-    [[ -n "$REMOTE" ]] && P+=" $SEP $YELLOW$REMOTE"
-    [[ -n "$LOCAL" ]] && P+=" $SEP $YELLOW$LOCAL"
-
-    GIT_WARNINGS=$(prompt_git_warnings)
-  fi
-
   P+=" $SEP"
   P+="\n"
   P+="$cARROW└ "
+
+  if prompt_is_inside_git
+  then
+    P+="$SEP $YELLOW$(prompt_git_branch) "
+
+    local REMOTE=$(prompt_git_remote)
+    local LOCAL=$(prompt_git_local)
+    [[ -n "$REMOTE" ]] && P+="$SEP $YELLOW$REMOTE "
+    [[ -n "$LOCAL" ]] && P+="$SEP $YELLOW$LOCAL "
+
+    GIT_WARNINGS=$(prompt_git_warnings)
+  fi
 
   local SYMS=$(prompt_root_and_jobs)
   local RET_STATUS=$(prompt_ret_status $EXIT)
