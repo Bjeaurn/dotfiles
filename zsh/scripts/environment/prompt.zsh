@@ -119,26 +119,27 @@ function build_prompt() {
   # Capturing the exit code must happen first
   local EXIT=$?
 
-  if [[ "$VIMODE" == "n" ]]
-  then
-    local cVIMODE="%F{16}%K{116}"
-    local cERROR=$cVIMODE
-    local cDIR=$cVIMODE
-    local cBRANCH=$cVIMODE
-    local cGITSTATUS=$cVIMODE
-    local cSEP=$cVIMODE
-    local cARROW=$cVIMODE
-  else
-    local cERROR="%F{124}%k"
-    local cDIR="%F{215}%k"
-    local cBRANCH="%F{215}%k"
-    local cGITSTATUS="%F{188}%k"
-    local cSEP="%F{245}%k"
-    local cARROW="%F{188}%k"
-  fi
+
+  #
+  # %F = Foreground color, these are explained here http://www.manpagez.com/man/1/zshmisc/ under "Visual effects"
+  # Colors are from here:  https://jonasjacek.github.io/colors/
+  #
+  local cERROR="%F{124}%k"
+  local cDIR="%F{39}%k"
+  local cBRANCH="%F{215}%k"
+  local cGITSTATUS="%F{188}%k"
+  local cSEP="%F{245}%k"
+  local cARROW="%F{188}%k"
+
+  local RED="%F{196}%k}"
+  local GREEN="%{$fg_bold[green]%}"
+  local YELLOW="%{$fg_bold[yellow]%}"
+  local CYAN="%{$fg_bold[cyan]%}"
+  local MAGENTA="%{$fg_bold[magenta]%}"
+  local WHITE="%{$fg_bold[white]%}"
 
   local RAW_SEP="❯"
-  local SEP="$cSEP$RAW_SEP"
+  local SEP="$WHITE$RAW_SEP"
   local P=""
 
   local WORKING_DIR=$(prompt_working_directory)
@@ -152,12 +153,12 @@ function build_prompt() {
 
   if prompt_is_inside_git
   then
-    P+=" $SEP $cBRANCH$(prompt_git_branch)"
+    P+=" $SEP $YELLOW$(prompt_git_branch)"
 
     local REMOTE=$(prompt_git_remote)
     local LOCAL=$(prompt_git_local)
-    [[ -n "$REMOTE" ]] && P+=" $SEP $cGITSTATUS$REMOTE"
-    [[ -n "$LOCAL" ]] && P+=" $SEP $cGITSTATUS$LOCAL"
+    [[ -n "$REMOTE" ]] && P+=" $SEP $YELLOW$REMOTE"
+    [[ -n "$LOCAL" ]] && P+=" $SEP $YELLOW$LOCAL"
 
     GIT_WARNINGS=$(prompt_git_warnings)
   fi
@@ -168,10 +169,10 @@ function build_prompt() {
 
   local SYMS=$(prompt_root_and_jobs)
   local RET_STATUS=$(prompt_ret_status $EXIT)
-  [[ -n "$RET_STATUS$SYMS$GIT_WARNINGS" ]] && P+="$SEP "
-  [[ -n "$SYMS" ]] && P+="$cGITSTATUS$SYMS"
-  [[ -n "$RET_STATUS" ]] && P+="$cERROR$RET_STATUS"
-  [[ -n "$GIT_WARNINGS" ]] && P+="$cERROR$GIT_WARNINGS"
+  [[ -n "$SYMS$RET_STATUS$GIT_WARNINGS" ]] && P+="$SEP "
+  [[ -n "$SYMS" ]] && P+="$YELLOW$SYMS"
+  [[ -n "$RET_STATUS" ]] && P+="$RED$RET_STATUS"
+  [[ -n "$GIT_WARNINGS" ]] && P+="$RED$GIT_WARNINGS"
   [[ -n "$RET_STATUS$SYMS$GIT_WARNINGS" ]] && P+=" "
 
   P+="$(prompt_is_git_dirty $cERROR $cSEP)$RAW_SEP"
