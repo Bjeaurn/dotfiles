@@ -4,6 +4,7 @@ tap 'homebrew/bundle'
 
 # Core Homebrew
 brew 'freetype'
+brew 'fzf'
 brew 'git'
 brew 'grep'
 brew 'imagemagick'
