@@ -1,8 +1,6 @@
 # brew install bat
 # brew install ctags
 
-export DEFAULT_DEV='~/Development'
-
 alias cd..='cd ..'
 alias h="cd $DEFAULT_DEV"
 alias d="cd $DEFAULT_DEV"

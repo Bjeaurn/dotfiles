@@ -16,18 +16,27 @@ compinit
 # Case-insensitive completions
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
+# /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/:/usr/local/MacGPG2/bin:/Users/bsc21433/.zsh/scripts/:/usr/local/opt/fzf/bin
+
 # Source my scripts (including fancy prompt!)
-export PATH=$PATH:~/.zsh/scripts/
+[[ "$PATH" != *"/.zsh/scripts/"* ]] && export PATH=$PATH:~/.zsh/scripts/
+
+# Run the local environment shell if we have one (not in repo!)
+[[ -f ~/.zsh/environment.sh ]] && source ~/.zsh/environment.sh
+
+# Source the local scripts ran (in repo!)
 . run-all-scripts-in-dir.sh ~/.zsh/environment
-. ~/.setEnv/init.sh 2> /dev/null
+
+# Run the setEnv init.sh if available (not in repo!)
+[ -f ~/.setEnv/init.sh ] && . ~/.setEnv/init.sh 2>/dev/null
 
 # Colors in ls
 export CLICOLOR=1
 
 # Auto-suggesions
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-bindkey '^[[Z' autosuggest-accept  # Shift-tab
-bindkey "^[[3~" delete-char # Turns the `fn+backspace` key back into delete.
+bindkey '^[[Z' autosuggest-accept # Shift-tab
+bindkey "^[[3~" delete-char       # Turns the `fn+backspace` key back into delete.
 
 zle -N select_branch
 bindkey "^g" select_branch
