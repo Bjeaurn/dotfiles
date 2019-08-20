@@ -88,13 +88,13 @@ if [[ -e $HOME/.setEnv/use-npmrc ]]; then
 else
   if [[ -e $ENVDIR/npmrc ]]; then
     rm ~/.npmrc
-    cp $ENVDIR/npmrc ~/.npmrc
+    ln -s $ENVDIR/npmrc ~/.npmrc
   fi
 fi
 
 if [[ -e $ENVDIR/settings.xml ]]; then
   rm ~/.m2/settings.xml
-  cp $ENVDIR/settings.xml ~/.m2/settings.xml
+  ln -s $ENVDIR/settings.xml ~/.m2/settings.xml
 fi
 
 if [[ -e $SETENVDIR/prompt ]]; then
@@ -102,7 +102,16 @@ if [[ -e $SETENVDIR/prompt ]]; then
 fi
 
 if [[ -e $ENVDIR/prompt ]]; then
-  cp $ENVDIR/prompt $SETENVDIR
+  # cp $ENVDIR/prompt $SETENVDIR
+  ln -s $ENVDIR/prompt $SETENVDIR
+fi
+
+if [[ -e $SETENVDIR/init.sh ]]; then
+  rm $SETENVDIR/init.sh
+fi
+
+if [[ -e $ENVDIR/init.sh ]]; then
+  ln -s $ENVDIR/init.sh $SETENVDIR
 fi
 
 if [[ -e $SETENVDIR/shutdown.sh ]]; then
@@ -110,11 +119,11 @@ if [[ -e $SETENVDIR/shutdown.sh ]]; then
 fi
 
 if [[ -e $ENVDIR/shutdown.sh ]]; then
-  cp $ENVDIR/shutdown.sh $SETENVDIR
+  ln -s $ENVDIR/shutdown.sh $SETENVDIR
 fi
 
-if [[ -e $ENVDIR/init.sh ]]; then
-  . $ENVDIR/init.sh
+if [[ -e $SETENVDIR/init.sh ]]; then
+  . $SETENVDIR/init.sh
 fi
 
 if [[ -e $ENVDIR/banner ]]; then
