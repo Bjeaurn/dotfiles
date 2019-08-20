@@ -24,7 +24,7 @@ git config --global alias.mail "config user.email"
 git config --global alias.master "!git stash && git co master && git pull && git prune-local && git stash pop"
 git config --global alias.sts "status -s"
 git config --global alias.prune-local "!git branch -vv | awk '/: gone]/{print \$1}' | xargs git branch -d"
-git config --global alias.uncommit "reset HEAD^"
+git config --global alias.uncommit "reset --soft HEAD^"
 git config --global alias.wipe "!git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard"
 git config --global alias.prune-merged "!git branch --merged master | grep -v \"\* master\" | xargs -n 1 git branch -d"
 
@@ -48,3 +48,25 @@ else
   # git config --global credential.helper cache
   git config --global credential.helper osxkeychain
 fi
+
+
+# Register semantic commits git aliases
+#
+# $1 — git alias and semantic message prefix
+# [$2] — (optional) custom semantic message prefix
+function make_git_alias {
+  if ! git config --global --get-all alias.$1 &>/dev/null; then
+    git config --global alias.$1  '!f() { [[ -z "$GIT_PREFIX" ]] || cd "$GIT_PREFIX" && if [[ -z $1 ]] && [[-z $2]]; then git commit -m "'$1' " -e; else git commit -$3m "'$1'($1): $2"; fi }; f'
+    echo 'Alias installed ' $1
+  else
+    echo $1 : 'alias already present, remove it from ~/.gitconfig file first'
+  fi
+}
+# Register aliases
+echo 'Installing git aliases'
+
+  semantic_aliases=( 'feat' 'fix' 'style' 'cleanup' 'refactor' 'perf' 'test' 'chore' 'tracking' 'docs' )
+
+  for semantic_alias in "${semantic_aliases[@]}"; do
+    make_git_alias $semantic_alias
+  done
