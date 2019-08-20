@@ -5,8 +5,8 @@
 # brew install fzf
 
 function installDotfiles() {
-  # scriptFor "brew"
-  # scriptFor "git"
+  scriptFor "brew"
+  scriptFor "git"
   installFor "zsh/zshrc" "zshrc"
   installFor "zsh/environment.sh" "zsh/environment.sh"
   installFor "zsh/scripts" "zsh"
