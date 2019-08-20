@@ -7,6 +7,7 @@
 function installDotfiles() {
   scriptFor "brew"
   scriptFor "git"
+  scriptFor "git" "semantic-commits.sh"
   installFor "zsh/zshrc" "zshrc"
   installFor "zsh/environment.sh" "zsh/environment.sh"
   installFor "zsh/scripts" "zsh"
@@ -34,8 +35,13 @@ function installFor() {
 }
 
 function scriptFor() {
-  echo "Installing $1..."
-  . $1/install.sh
+  if [ "$#" == 2 ]; then
+    echo "Installing $1/$2..."
+    . $1/$2
+  else 
+    echo "Installing $1..."
+    . $1/install.sh
+  fi
 }
 
 if [ "$1" == "--force" -o "$1" == "-f" ]; then
