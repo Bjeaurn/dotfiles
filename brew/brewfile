@@ -1,6 +1,6 @@
-tap 'caskroom/cask'
+tap 'homebrew/cask-cask'
 tap 'caskroom/fonts'
-tap 'homebrew/bundle'
+tap 'homebrew/cask-fonts'
 
 # Core Homebrew
 brew 'freetype'
@@ -35,17 +35,21 @@ brew 'zsh-syntax-highlighting'
 # Cask Apps
 cask_args appdir: '/Applications'
 
+cask 'bartender'
 cask 'docker'
 cask 'firefox'
 cask 'font-open-sans'
 cask 'font-fira-code'
 cask 'font-fira-mono'
+cask 'gitup'
 cask 'google-chrome'
 cask 'lulu'
+cask 'notion'
 cask 'obs'
 cask 'rambox'
 cask 'spotify'
 cask 'slack'
+cask 'tunnelblick'
 cask 'visual-studio-code'
 cask 'vlc'
 
