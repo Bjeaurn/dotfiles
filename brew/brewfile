@@ -1,5 +1,4 @@
-tap 'homebrew/cask-cask'
-tap 'caskroom/fonts'
+tap 'homebrew/cask'
 tap 'homebrew/cask-fonts'
 
 # Core Homebrew
