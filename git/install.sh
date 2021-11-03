@@ -30,7 +30,7 @@ git config --global alias.prune-merged "!git branch --merged master | grep -v \"
 
 # for presentations: see https://coderwall.com/p/ok-iyg/git-prev-next
 git config --global alias.prev "checkout HEAD^1"
-git config --global alias.next "!sh -c 'git log --reverse --pretty=%H master | awk \"/\$(git rev-parse HEAD)/{getline;print}\" | xargs git checkout'"
+git config --global alias.next "!sh -c 'git log --reverse --pretty=%H master | awk \"/\$(git rev-parse HEAD)/{getline;print}\" | xargs git checkout' || !sh -c 'git log --reverse --pretty=%H main | awk \"/\$(git rev-parse HEAD)/{getline;print}\" | xargs git checkout'"
 
 # merge and diff tools
 git config --global merge.tool nano
@@ -39,8 +39,7 @@ git config --global diff.tool nano
 git config --global difftool.prompt false
 git config --global alias.review "!f() { git difftool --tool=kdiff3 --dir-diff \$1..; }; f"
 
-
-if [[ `uname -s` == MINGW* ]]; then
+if [[ $(uname -s) == MINGW* ]]; then
   # Windows
   git config --global core.autocrlf true
 else
