@@ -2,6 +2,7 @@
 # brew install ctags
 
 alias cd..='cd ..'
+alias ll="ls -l"
 alias h="cd $DEFAULT_DEV"
 alias d="cd $DEFAULT_DEV"
 alias gbda='git prune-merged'
