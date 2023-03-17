@@ -34,7 +34,7 @@ zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 
 export CLICOLOR=1
 
 # Auto-suggesions
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^[[Z' autosuggest-accept # Shift-tab
 bindkey "^[[3~" delete-char       # Turns the `fn+backspace` key back into delete.
 
@@ -42,7 +42,7 @@ zle -N select_branch
 bindkey "^g" select_branch
 
 # Syntax highlighting (must be at the end of .zshrc!)
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Enable FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -58,11 +58,17 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # zle -N zle-line-init
 
 ###-tns-completion-start-###
-if [ -f /Users/bjeaurn/.tnsrc ]; then 
-    source /Users/bjeaurn/.tnsrc 
+if [ -f /Users/bjeaurn/.tnsrc ]; then
+    source /Users/bjeaurn/.tnsrc
 fi
 ###-tns-completion-end-###
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"                   # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
+
+# Load Kubectl autcompletion
+source <(kubectl completion zsh)

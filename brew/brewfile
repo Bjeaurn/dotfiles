@@ -36,6 +36,7 @@ cask_args appdir: '/Applications'
 
 cask 'bartender'
 cask 'docker'
+cask 'discord'
 cask 'firefox'
 cask 'font-open-sans'
 cask 'font-fira-code'
