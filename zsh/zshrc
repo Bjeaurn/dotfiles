@@ -47,6 +47,11 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # Enable FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Setup Docker for M1
+export DOCKER_BUILDKIT=0
+export COMPOSE_DOCKER_CLI_BUILD=0
+export DOCKER_DEFAULT_PLATFORM=linux/amd64
+
 # ## Benchmark prompt
 # typeset -F SECONDS start
 # precmd() {
