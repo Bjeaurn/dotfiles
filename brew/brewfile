@@ -34,7 +34,6 @@ brew 'zsh-syntax-highlighting'
 # Cask Apps
 cask_args appdir: '/Applications'
 
-cask 'bartender'
 cask 'docker'
 cask 'discord'
 cask 'firefox'

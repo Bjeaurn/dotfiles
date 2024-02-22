@@ -15,6 +15,7 @@ git config --global diff.compactionHeuristic true
 
 git config --global alias.amend "commit --amend"
 git config --global alias.ci "commit -v"
+git config --global alias.current-branch "rev-parse --abbrev-ref HEAD"
 git config --global alias.co checkout
 git config --global alias.cpick cherry-pick
 git config --global alias.empty "commit --allow-empty -m \"Trigger notification\""
@@ -30,8 +31,7 @@ git config --global alias.prune-merged "!git branch --merged master | grep -v \"
 
 # for presentations: see https://coderwall.com/p/ok-iyg/git-prev-next
 git config --global alias.prev "checkout HEAD^1"
-git config --global alias.next "!sh -c 'it log --reverse --pretty=%H "$(git rev-parse --abbrev-ref HEAD)" | awk "/$(git rev-parse HEAD)/{getline
-print}" | xargs git checkout'"
+git config --global alias.next "!sh -c 'git log --reverse --pretty=%H \"$(git current-branch)\" | awk \"/$(git rev-parse HEAD)/{getline;print}\" | xargs git checkout'"
 
 # merge and diff tools
 git config --global merge.tool nano

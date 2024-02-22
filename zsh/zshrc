@@ -62,11 +62,11 @@ export DOCKER_DEFAULT_PLATFORM=linux/amd64
 # }
 # zle -N zle-line-init
 
-###-tns-completion-start-###
-if [ -f /Users/bjeaurn/.tnsrc ]; then
-    source /Users/bjeaurn/.tnsrc
-fi
-###-tns-completion-end-###
+# ###-tns-completion-start-### TNS is for NativeScript?
+# if [ -f /Users/bjeaurn/.tnsrc ]; then
+#     source /Users/bjeaurn/.tnsrc
+# fi
+# ###-tns-completion-end-###
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"                   # This loads nvm
@@ -77,3 +77,47 @@ source <(ng completion script)
 
 # Load Kubectl autcompletion
 source <(kubectl completion zsh)
+
+# pnpm
+export PNPM_HOME="/Users/bjorn/Library/pnpm"
+case ":$PATH:" in
+*":$PNPM_HOME:"*) ;;
+*) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# bun completions
+[ -s "/Users/bjorn/.bun/_bun" ] && source "/Users/bjorn/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+eval export PATH="/Users/bjorn/.jenv/shims:${PATH}"
+export JENV_SHELL=zsh
+export JENV_LOADED=1
+unset JAVA_HOME
+unset JDK_HOME
+source '/opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/../completions/jenv.zsh'
+jenv rehash 2>/dev/null
+jenv refresh-plugins
+
+jenv() {
+  type typeset &>/dev/null && typeset command
+  command="$1"
+  if [ "$#" -gt 0 ]; then
+    shift
+  fi
+
+  case "$command" in
+  enable-plugin | rehash | shell | shell-options)
+    eval $(jenv "sh-$command" "$@")
+    ;;
+  *)
+    command jenv "$command" "$@"
+    ;;
+  esac
+}
+
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
