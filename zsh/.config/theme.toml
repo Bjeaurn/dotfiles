@@ -58,7 +58,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
       "{{if eq .Code 0}}p:prompt{{end}}",
     ]
     background = 'transparent'
-    template = '❯ '  
+    template = '❯'  
 
 [[tooltips]]
   type = 'aws'
@@ -97,7 +97,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
 [secondary_prompt]
   foreground = 'p:prompt'
   background = 'transparent'
-  template = '❯❯ '
+  template = '❯❯'
 
 [palette]
   prompt = '#228dc7'
