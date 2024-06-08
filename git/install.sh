@@ -22,12 +22,12 @@ git config --global alias.empty "commit --allow-empty -m \"Trigger notification\
 git config --global alias.flush "clean -fd"
 git config --global alias.flush-all "clean -fdx"
 git config --global alias.mail "config user.email"
-git config --global alias.master "!git stash && git co master && git pull && git prune-local && git stash pop"
+git config --global alias.main "!git stash && git co main && git pull && git prune-local && git stash pop"
 git config --global alias.sts "status -s"
 git config --global alias.prune-local "!git branch -vv | awk '/: gone]/{print \$1}' | xargs git branch -d"
 git config --global alias.uncommit "reset --soft HEAD^"
 git config --global alias.wipe "!git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard"
-git config --global alias.prune-merged "!git branch --merged master | grep -v \"\* master\" | xargs -n 1 git branch -d"
+git config --global alias.prune-merged "!git branch --merged main | grep -v \"\* main\" | xargs -n 1 git branch -d"
 
 # for presentations: see https://coderwall.com/p/ok-iyg/git-prev-next
 git config --global alias.prev "checkout HEAD^1"
