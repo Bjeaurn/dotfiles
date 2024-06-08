@@ -89,7 +89,7 @@ eval "$(oh-my-posh init zsh --config $HOME/.zsh/.config/theme.toml)"
 bindkey '^[[Z' autosuggest-accept # Shift-tab
 bindkey "^[[3~" delete-char       # Turns the `fn+backspace` key back into delete.
 bindkey "^[[A" history-search-backward
-bindkey "^[[B" history-search-backward
+bindkey "^[[B" history-search-forward
 
 # Initialize local and custom scripts
 
