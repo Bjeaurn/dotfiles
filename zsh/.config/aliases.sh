@@ -17,7 +17,7 @@ alias ci='echo "No CI set for this environment."'
 alias dotfiles="cd $DEFAULT_DEV/dotfiles"
 
 # So we can type `git add *Test*` instead of `git add "*Test*"`
-# alias git="noglob git"
+alias git="noglob git"
 
 # MacOS pre-installs a bad version of ctags so we substitute our own.
 if [[ "$(uname -s)" == "Darwin" ]]; then

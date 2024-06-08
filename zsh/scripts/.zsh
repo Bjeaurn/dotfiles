@@ -1,1 +1,0 @@
-/Users/bsc21433/.zsh/

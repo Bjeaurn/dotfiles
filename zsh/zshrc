@@ -1,72 +1,18 @@
-# History
-HISTFILE=~/.histfile
-HISTSIZE=100000
-SAVEHIST=100000
-setopt hist_expire_dups_first
-setopt appendhistory
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
-# Settings
-setopt autocd nomatch
-unsetopt beep extendedglob notify
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# Completions
-zstyle :compinstall filename '~/.zshrc'
-autoload -Uz compinit
-compinit
-# Case-insensitive completions
-zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-
-# /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/:/usr/local/MacGPG2/bin:/Users/bsc21433/.zsh/scripts/:/usr/local/opt/fzf/bin
-
-# Source my scripts (including fancy prompt!)
-[[ "$PATH" != *"/.zsh/scripts/"* ]] && export PATH=$PATH:~/.zsh/scripts/
-
-# Run the local environment shell if we have one (not in repo!)
-[[ -f ~/.zsh/environment.sh ]] && source ~/.zsh/environment.sh
-
-# Source the local scripts ran (in repo!)
-. run-all-scripts-in-dir.sh ~/.zsh/environment
-
-# Run the setEnv init.sh if available (not in repo!)
-[ -f ~/.setEnv/init.sh ] && . ~/.setEnv/init.sh 2>/dev/null
-
-# Colors in ls
-export CLICOLOR=1
-
-# Auto-suggesions
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-bindkey '^[[Z' autosuggest-accept # Shift-tab
-bindkey "^[[3~" delete-char       # Turns the `fn+backspace` key back into delete.
-
-zle -N select_branch
-bindkey "^g" select_branch
-
-# Syntax highlighting (must be at the end of .zshrc!)
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-# Enable FZF
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+PATH="$HOME/.local/bin:$PATH"
 
 # Setup Docker for M1
 export DOCKER_BUILDKIT=0
 export COMPOSE_DOCKER_CLI_BUILD=0
 export DOCKER_DEFAULT_PLATFORM=linux/amd64
-
-# ## Benchmark prompt
-# typeset -F SECONDS start
-# precmd() {
-#   start=$SECONDS
-# }
-# zle-line-init() {
-#   PREDISPLAY="[$(( $SECONDS - $start ))] "
-# }
-# zle -N zle-line-init
-
-# ###-tns-completion-start-### TNS is for NativeScript?
-# if [ -f /Users/bjeaurn/.tnsrc ]; then
-#     source /Users/bjeaurn/.tnsrc
-# fi
-# ###-tns-completion-end-###
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"                   # This loads nvm
@@ -79,7 +25,7 @@ source <(ng completion script)
 source <(kubectl completion zsh)
 
 # pnpm
-export PNPM_HOME="/Users/bjorn/Library/pnpm"
+export PNPM_HOME="${HOME}/Library/pnpm"
 case ":$PATH:" in
 *":$PNPM_HOME:"*) ;;
 *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -93,31 +39,97 @@ esac
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-eval export PATH="/Users/bjorn/.jenv/shims:${PATH}"
-export JENV_SHELL=zsh
-export JENV_LOADED=1
-unset JAVA_HOME
-unset JDK_HOME
-source '/opt/homebrew/Cellar/jenv/0.5.6/libexec/libexec/../completions/jenv.zsh'
-jenv rehash 2>/dev/null
-jenv refresh-plugins
+source <(switcher init zsh)
 
-jenv() {
-  type typeset &>/dev/null && typeset command
-  command="$1"
-  if [ "$#" -gt 0 ]; then
-    shift
-  fi
+# Set the directory we want to store zinit and plugins.
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
-  case "$command" in
-  enable-plugin | rehash | shell | shell-options)
-    eval $(jenv "sh-$command" "$@")
-    ;;
-  *)
-    command jenv "$command" "$@"
-    ;;
-  esac
-}
+# Download Zinit if not installed
+if [ ! -d "$ZINIT_HOME" ]; then
+    mkdir -p "$(dirname $ZINIT_HOME)"
+    git clone https://github.com/zdharma-continuum/zinit "$ZINIT_HOME"
+fi
 
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
+# Source/Load zinit
+source "${ZINIT_HOME}/zinit.zsh"
+
+# Add in Powerlevel10k theme.
+zinit ice depth=1; zinit light romkatv/powerlevel10k
+
+# Add in zsh plugins
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light Aloxaf/fzf-tab
+
+# Add in snippets
+zinit snippet OMZP::git
+zinit snippet OMZP::colored-man-pages
+zinit snippet OMZP::command-not-found
+
+# Load completions
+autoload -U compinit
+
+## Use cache unless .zcompdump file is older than a day
+if [ -n "$(find ${ZDOTDIR}/.zcompdump -mmin +1440 2> /dev/null)" ]; then
+  compinit
+else
+  compinit -C
+fi
+
+zinit cdreplay -q
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Keybindings
+bindkey '^[[Z' autosuggest-accept # Shift-tab
+bindkey "^[[3~" delete-char       # Turns the `fn+backspace` key back into delete.
+bindkey "^[[A" history-search-backward
+bindkey "^[[B" history-search-backward
+
+# Initialize local and custom scripts
+
+# Source my scripts (including fancy prompt!)
+[[ "$PATH" != *"/.zsh/scripts/"* ]] && export PATH=$PATH:~/.zsh/scripts/
+
+# Run the local environment shell if we have one (not in repo!)
+[[ -f ~/.zsh/environment.sh ]] && source ~/.zsh/environment.sh
+
+# Run the setEnv init.sh if available (not in repo!)
+[ -f ~/.setEnv/init.sh ] && . ~/.setEnv/init.sh 2>/dev/null
+
+# Source all the local custom configs
+[[ -f ~/.config/aliases.sh ]] && source ~/.config/aliases.sh
+[[ -f ~/.config/environments-alias.sh ]] && source ~/.config/environments-alias.sh
+[[ -f ~/.config/fzf-config.sh ]] && source ~/.config/fzf-config.sh
+[[ -f ~/.config/git-branch-inject.sh ]] && source ~/.config/git-branch-inject.sh
+[[ -f ~/.config/jenv.sh ]] && source ~/.config/jenv.sh
+
+# History
+HISTSIZE=5000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt histignorealldups
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
+  
+# Completion styling
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+
+# Aliases
+alias ls='ls --color'
+
+# Shell integrations
+eval "$(fzf --zsh)"
+eval "$(zoxide init --cmd cd zsh)"

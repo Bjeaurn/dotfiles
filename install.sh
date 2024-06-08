@@ -5,12 +5,14 @@
 # brew install fzf
 
 function installDotfiles() {
-  scriptFor "brew"
-  scriptFor "git"
-  scriptFor "git" "semantic-commits.sh"
+  # scriptFor "brew"
+  # scriptFor "git"
+  # scriptFor "git" "semantic-commits.sh"
   installFor "zsh/zshrc" "zshrc"
-  installFor "zsh/environment.sh" "zsh/environment.sh"
-  installFor "zsh/scripts" "zsh"
+  installFor "zsh/p10k.zsh" "p10k.zsh"
+  installFor "zsh/environment.sh" "zsh/environment.sh" "zsh"
+  installFor "zsh/scripts" "zsh/scripts" "zsh"
+  installFor "zsh/.config" "zsh/.config" "zsh"
 }
 
 ## $1 = FROM
