@@ -103,11 +103,11 @@ bindkey "^[[B" history-search-forward
 [ -f ~/.setEnv/init.sh ] && . ~/.setEnv/init.sh 2>/dev/null
 
 # Source all the local custom configs
-[[ -f ~/.config/aliases.sh ]] && source ~/.config/aliases.sh
-[[ -f ~/.config/environments-alias.sh ]] && source ~/.config/environments-alias.sh
-[[ -f ~/.config/fzf-config.sh ]] && source ~/.config/fzf-config.sh
-[[ -f ~/.config/git-branch-inject.sh ]] && source ~/.config/git-branch-inject.sh
-[[ -f ~/.config/jenv.sh ]] && source ~/.config/jenv.sh
+[[ -f ~/.zsh/.config/aliases.sh ]] && source ~/.zsh/.config/aliases.sh
+[[ -f ~/.zsh/.config/environments-alias.sh ]] && source ~/.zsh/.config/environments-alias.sh
+[[ -f ~/.zsh/.config/fzf-config.sh ]] && source ~/.zsh/.config/fzf-config.sh
+[[ -f ~/.zsh/.config/git-branch-inject.sh ]] && source ~/.zsh/.config/git-branch-inject.sh
+[[ -f ~/.zsh/.config/jenv.sh ]] && source ~/.zsh/.config/jenv.sh
 
 # History
 HISTSIZE=5000
